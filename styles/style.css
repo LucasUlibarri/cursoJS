@@ -1,0 +1,34 @@
+*{
+    padding: 0;
+    margin: 0;
+    font-size: 1em;
+    border: 0;
+}
+
+div{
+    margin: 4%;
+}
+
+div.formContainer{
+    padding: 0 20vh;
+}
+#inputNombre{
+    width: 100%;
+    border: 1px solid #165126;
+    border-radius: 4px;
+    padding: 1% 3%;
+    margin-bottom: 1vh;
+}
+
+#firstBtn{
+    background-color: #165126; 
+    color: #c4c4c4;
+    padding: 1% 3%;
+    border-radius: 4px;
+    display: block;
+    width: 100%;
+}
+#firstBtn:hover{
+    background-color: #0b2d14; 
+}
+

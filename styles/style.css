@@ -9,7 +9,7 @@ div{
     margin: 4%;
 }
 
-div.formContainer{
+#formContainer{
     padding: 0 20vh;
 }
 #inputNombre{
@@ -32,3 +32,7 @@ div.formContainer{
     background-color: #0b2d14; 
 }
 
+.cardProducto{
+    border: 2px solid #343434;
+    border-radius: 4px;
+}

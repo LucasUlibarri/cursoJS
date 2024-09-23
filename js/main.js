@@ -26,15 +26,37 @@ function listaProductos(){
     for (const producto of productos){
         let card = document.createElement('div');
         card.className = 'cardProducto'
-        card.innerHTML = `<h3> ${producto.nombre} </h3>
+        card.innerHTML = `<h3 class="nombreProducto"> ${producto.nombre} </h3>
                             <p> ${producto.descripcion}</p>
-                            <b> $ ${producto.precio}</b>
+                            <p class="precioProducto">$ ${producto.precio}</p>
                             <button class="btnCarrito">Agregar al carrito</button>`
         document.body.append(card)
     }
 }
 
-    
+let carrito = document.createElement('div')
+carrito.id = 'carrito'
+let listaCarrito = []
+carrito.innerHTML = listaCarrito
+let botonesAgregar = document.querySelectorAll('.btnCarrito')
+
+function agregarAlCarrito(){
+    let nombreProducto = card.querySelector('.nombreProducto');
+    let precioProducto = card.querySelector('.precioProducto');
+
+    let productoEnCarrito = {
+        nombre: nombreProducto,
+        precio: precioProducto,
+    };
+
+    listaCarrito.push(productoEnCarrito)
+    localStorage.setItem("carrito", listaCarrito)
+}
+
+
+botonesAgregar.forEach((boton) => {
+    boton.addEventListener('click', agregarAlCarrito)
+})
 
 let firstForm = document.createElement('form')
 firstForm.id = "formContainer",
@@ -45,46 +67,25 @@ firstForm.innerHTML = `<input type="text" id="inputNombre" name="Nombre">
 document.body.appendChild(firstForm);
 
 
-/* function storeName(){
-    let inputNombre = document.getElementById("inputNombre");
-    inputNombre.addEventListener('change', function(e){
-    sessionStorage.setItem('Nombre', e.target.value);
-})
-} */
-
 let inputNombre = document.getElementById("inputNombre");
-let btn = document.getElementById('firstBtn')
-
-/* btn.addEventListener("click", () => {
-    inputNombre.addEventListener("change", (e)=>{
-        sessionStorage.setItem('nombre', e.target.value);
-    })
-}) */
-
-let validarForm = document.getElementById('formContainer')
-/* validarForm.addEventListener('submit', (e)=>{
-    e.preventDefault();
-    inputNombre.addEventListener("change", (evento)=>{
-        sessionStorage.setItem('nombre', evento.target.value);
-    })
-}) */
-
-
-let nombreUsuario = sessionStorage.getItem('nombre')
+let btn = document.getElementById('firstBtn');
 
 let nombreDisplay = div
 nombreDisplay.className = 'nombreDisplay';
-nombreDisplay.innerHTML = '<h1>Bienvenido ' + nombreUsuario + '!</h1>';
 
 btn.addEventListener("click", () => {    
-    inputNombre.addEventListener("change", (evento)=>{
-        sessionStorage.setItem('nombre', evento.target.value);
-    })
-    document.getElementById('formContainer').remove();
-    document.body.appendChild(nombreDisplay)
-    listaProductos()
+    sessionStorage.setItem('nombre', inputNombre.value);
+    let nombreUsuario = sessionStorage.getItem('nombre')
+
+    if((nombreUsuario == '')||(nombreUsuario == null)){
+        let errorMsg = document.createElement('h1')
+        errorMsg.innerHTML = 'Por favor ingresar un valor'
+        document.body.appendChild(errorMsg)
+    }else{
+        document.getElementById('formContainer').remove();
+        nombreDisplay.innerHTML = `<h1>Bienvenido ${nombreUsuario}!</h1>`;
+        document.body.appendChild(nombreDisplay)
+        listaProductos()
+    }
 });
 
-
-//let firstBtn = document.getElementById('firstBtn');
-//firstBtn.addEventListener('click', f());

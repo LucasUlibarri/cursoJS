@@ -1,0 +1,29 @@
+[
+    {
+        "id": 1,
+        "nombre": "Producto 1",
+        "image": "./images/2024_02_14-Roma-14.jpg",
+        "precio": 200,
+        "descripcion": "Este producto es el modelo 1",
+        "categoria": "Alpha",
+        "stock": 6
+    },
+    {
+        "id": 2,
+        "nombre": "Producto 2",
+        "image": "./images/2024_02_14-Roma-14.jpg",
+        "precio": 400,
+        "descripcion": "Este producto es el modelo 2",
+        "categoria": "Alpha",
+        "stock": 8
+    },
+    {
+        "id": 3,
+        "nombre": "Producto 3",
+        "image": "./images/2024_02_14-Roma-14.jpg",
+        "precio": 600,
+        "descripcion": "Este producto es el modelo 3",
+        "categoria": "Beta",
+        "stock": 20
+    }
+]

@@ -1,14 +1,70 @@
-*{
+@font-face {
+    font-family: "Leap";
+    src: url(../assets/fonts/Leap-Font/Leap.otf);
+}
+@font-face {
+    font-family: "Open-Sans";
+    src: url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+}
+*{ 
     padding: 0;
     margin: 0;
+    font-family: "Open-Sans", sans-serif;
+    text-decoration: none;
     font-size: 1em;
     border: 0;
+    box-sizing: border-box;
+    --nasaBlue:#0032A0;
+    --nasaRed:#E4002B;
+    --white:#FFF;
+    --black: #141414;
 }
 
+h1{
+    font-family: "Leap";
+    font-size: 3rem;
+    letter-spacing: .15rem;
+    color: var(--nasaRed);
+}
+
+header{
+    background-color: var(--black);
+    display: flex;
+    justify-content: space-between;
+    padding: 2% 5%;
+}
+
+main{
+    display: flex;
+}
+
+#productsSection{
+    width: 75%;
+    padding: 5%;
+}
+
+#carrito{
+    background-color: var(--nasaBlue);
+    height: 100vh;
+    width: 25%;
+    padding: 5% 2%;
+}
+
+.row{
+    display: flex;
+}
+
+.card{
+    background-color: beige;
+    margin: 0 2%;
+}
+.card-content{
+    padding: 2%;
+}
+/* 
 div{
     margin: 4%;
 }
-
 #formContainer{
     margin: 5vh;
     padding: 0 20vh;
@@ -47,4 +103,4 @@ div{
 .btnCarrito:hover{
     background-color: #165126;
     color: #c4c4c4;
-}
+} */

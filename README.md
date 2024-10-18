@@ -22,15 +22,17 @@ Este proyecto es una aplicación de eCommerce que permite a los usuarios navegar
 ## Estructura del Proyecto
 
 ```
-/ecommerce-nasa
+/cursoJS
 ├── index.html
 ├── styles
 │   └── style.css
 ├── js
 │   ├── main.js
-│   ├── products.js
-│   └── confirmarPago.js
-├── productos.json
+│   └── products.js
+├── database
+│   └── productos.json
+├── images
+├── assets
 └── README.md
 ```
 
@@ -38,7 +40,7 @@ Este proyecto es una aplicación de eCommerce que permite a los usuarios navegar
 
 1. Clona este repositorio o descarga el código.
    ```bash
-   git clone https://github.com/tu_usuario/ecommerce-nasa.git
+   git clone https://github.com/LucasUlibarri/cursoJS.git
    ```
 2. Abre el archivo `index.html` en tu navegador web.
 
@@ -64,7 +66,3 @@ Este proyecto es una aplicación de eCommerce que permite a los usuarios navegar
 ## Contribuciones
 
 Las contribuciones son bienvenidas. Si deseas mejorar este proyecto, por favor, abre un problema o un pull request.
-
-## Licencia
-
-Este proyecto está bajo la Licencia MIT. Para más detalles, consulta el archivo LICENSE.

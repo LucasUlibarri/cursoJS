@@ -43,7 +43,7 @@ let total = 0;
 let productosMap = {};
 async function cargarProductos() {
     try {
-        const response = await fetch('../database/productos.json');
+        const response = await fetch('database/productos.json');
         const productos = await response.json();
 
         productos.forEach(producto => {

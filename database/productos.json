@@ -4,23 +4,31 @@
         "nombre": "Ovni 96",
         "image": "./images/ovni.jpeg",
         "precio": 350000,
-        "descripcion": "Ovni usado, modelo 96. Actualmente tiene 6 viajes a la luna y 2 a Marte. Puede absorber 17 vacas por minuto",
+        "descripcion": "Ovni usado, modelo 96. Actualmente tiene 6 viajes a la luna y 2 a Marte. Puede absorber 17 vacas por minuto.",
         "stock": 2
     },
     {
         "id": 2,
-        "nombre": "Producto 2",
-        "image": "./images/2024_02_14-Roma-14.jpg",
-        "precio": 400,
-        "descripcion": "Este producto es el modelo 2",
-        "stock": 8
+        "nombre": "Señaletica para campos",
+        "image": "./images/senaletica-vacas.jpg",
+        "precio": 30000,
+        "descripcion": "Moderna señaletica para campos en zona del Uritorco, para evitar llevar el ganado allí.",
+        "stock": 20
     },
     {
         "id": 3,
-        "nombre": "Producto 3",
-        "image": "./images/2024_02_14-Roma-14.jpg",
-        "precio": 600,
-        "descripcion": "Este producto es el modelo 3",
-        "stock": 20
+        "nombre": "Pase Area 51",
+        "image": "./images/area51-pase.webp",
+        "precio": 600000,
+        "descripcion": "Pase pre-aprobado para acceso garantizado al area 51.",
+        "stock": 5
+    },
+    {
+        "id": 4,
+        "nombre": "Ticket para vuelo a Japón",
+        "image": "./images/ticket.jpg",
+        "precio": 1000000,
+        "descripcion": "Estas naves se van a remontar a la estratósfera, y desde ahí elegirán el lugar donde quieran ir, de tal forma que en una hora y media podremos estar en Japón.",
+        "stock": 3
     }
 ]

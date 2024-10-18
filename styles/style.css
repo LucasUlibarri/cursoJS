@@ -30,6 +30,9 @@ header{
     display: flex;
     justify-content: space-between;
     padding: 2% 5%;
+    position: sticky;
+    top: 0;
+    z-index: 999;
 }
 
 main{
@@ -41,6 +44,7 @@ main{
     padding: 5%;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+    grid-row-gap: 5%;
 }
 
 #carrito{
@@ -48,6 +52,8 @@ main{
     height: 100vh;
     width: 25%;
     padding: 5% 2%;
+    position: fixed;
+    right: 0;
 }
 
 #nombreUsuario-carrito{
@@ -62,16 +68,19 @@ main{
     border: 2px solid var(--black);
     margin: 0 2%;
     border-radius: 0;
+    justify-content: space-between;
 }
 .card-content{
     padding: 5%;
 }
 .card-img{
     border-radius: 0;
+    height: 20vh;
+    object-fit: cover;
 }
 
 .ocultar{
-    display: none;
+    display: none!important;
 }
 
 
@@ -87,6 +96,9 @@ button:hover{
     background-color: var(--nasaBlue);
     color: var(--white);
 }
+.btn-primario:hover{
+    background-color: #002473;
+}
 
 .btn-secundario{
     border-top: 2px solid var(--black);
@@ -101,6 +113,9 @@ button:hover{
     border-radius: 0;
     width: 20%;
 }
+.btn.btn-danger.btn-sm.eliminar-producto:hover{
+    background-color: #b90022;
+}
 
 ul#lista-carrito{
     padding: 5% 0;
@@ -108,6 +123,13 @@ ul#lista-carrito{
 
 #lista-carrito li{
     list-style: none;
-    margin-bottom: 7%;
+    margin-bottom: 20%;
     display: flex;
+    justify-content: space-between;
+}
+
+.msj-despedida{
+    text-align: center;
+    margin-top: 20%;
+    width: 100%;
 }

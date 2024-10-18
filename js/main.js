@@ -1,18 +1,28 @@
-
-function capturarNombreUsuario(){
+function capturarNombreUsuario() {
     Swal.fire({
         title: 'Ingresa tu nombre',
         input: 'text',
         allowOutsideClick: false,
         showCancelButton: false,
         confirmButtonText: 'Enviar',
+        inputValidator: (value) => {
+            if (!value) {
+                return '¡Debes ingresar tu nombre!'; 
+            }
+        }
     }).then((result) => {
-        if(result.value){
-            sessionStorage.setItem('nombreUsuario', result.value);
+        if (result.value) {
+            const nombreFormateado = result.value
+                .toLowerCase()
+                .replace(/^(.)/, (match) => match.toUpperCase());
+            
+            sessionStorage.setItem('nombreUsuario', nombreFormateado);
             actualizarNombreCarrito();
         }
-    })
+    });
 }
+
+
 
 
 function actualizarNombreCarrito(){
@@ -219,13 +229,13 @@ document.getElementById('confirmar-carrito').addEventListener('click', () => {
                 
                 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                 if (!emailPattern.test(email)) {
-                    Swal.showValidationMessage('Por favor, ingresa un correo electrónico válido');
+                    Swal.showValidationMessage('Ingresa un mail válido');
                     return false;
                 }
 
                 
                 if (tarjeta.length !== 4 || isNaN(tarjeta)) {
-                    Swal.showValidationMessage('Los últimos 4 dígitos de la tarjeta deben ser exactamente 4 números');
+                    Swal.showValidationMessage('Ingresar un mínimo de 4 números');
                     return false;
                 }
 
@@ -254,11 +264,11 @@ function mostrarMensajeAgradecimiento(nombre) {
 
     
     const mensaje = document.createElement('div');
-    mensaje.style.textAlign = 'center';
-    mensaje.style.marginTop = '20%';
+    mensaje.classList.add("msj-despedida")
     mensaje.innerHTML = `
         <h1>Gracias, ${nombre}, por tu compra!</h1>
         <p>Tu pedido ha sido procesado con éxito.</p>
+    
     `;
     document.querySelector('main').appendChild(mensaje);
 }

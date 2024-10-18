@@ -1,11 +1,9 @@
 @font-face {
     font-family: "Leap";
-    src: url(../assets/fonts/Leap-Font/Leap.otf);
+    src: url(../assets/Leap-Font/Leap.otf);
 }
-@font-face {
-    font-family: "Open-Sans";
-    src: url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
-}
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
 *{ 
     padding: 0;
     margin: 0;
@@ -41,13 +39,19 @@ main{
 #productsSection{
     width: 75%;
     padding: 5%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
 }
 
 #carrito{
-    background-color: var(--nasaBlue);
+    border-left: 2px solid var(--black);
     height: 100vh;
     width: 25%;
     padding: 5% 2%;
+}
+
+#nombreUsuario-carrito{
+    font-weight: 700;
 }
 
 .row{
@@ -55,52 +59,55 @@ main{
 }
 
 .card{
-    background-color: beige;
+    border: 2px solid var(--black);
     margin: 0 2%;
+    border-radius: 0;
 }
 .card-content{
-    padding: 2%;
+    padding: 5%;
 }
-/* 
-div{
-    margin: 4%;
-}
-#formContainer{
-    margin: 5vh;
-    padding: 0 20vh;
-}
-#inputNombre{
-    width: 100%;
-    border: 1px solid #165126;
-    border-radius: 4px;
-    padding: 1% 3%;
-    margin-bottom: 1vh;
+.card-img{
+    border-radius: 0;
 }
 
-#firstBtn{
-    background-color: #165126; 
-    color: #c4c4c4;
-    padding: 1% 3%;
-    border-radius: 4px;
-    display: block;
-    width: 100%;
-}
-#firstBtn:hover{
-    background-color: #0b2d14; 
+.ocultar{
+    display: none;
 }
 
-.cardProducto{
-    border: 2px solid #343434;
-    border-radius: 4px;
-    padding: 2%;
+
+button{
+    width: 100%;
+    padding: 5%;
 }
-.btnCarrito{
-    border-radius: 5px;
-    border: 2px solid #165126;
-    padding: 2% 5%;
-    background: transparent;
+button:hover{
+    text-decoration: underline;
 }
-.btnCarrito:hover{
-    background-color: #165126;
-    color: #c4c4c4;
-} */
+
+.btn-primario{
+    background-color: var(--nasaBlue);
+    color: var(--white);
+}
+
+.btn-secundario{
+    border-top: 2px solid var(--black);
+    background-color: var(--white);
+}
+.btn-secundario:hover{
+    background-color: #d9d9d9;
+}
+
+.btn.btn-danger.btn-sm.eliminar-producto{
+    background-color: var(--nasaRed);
+    border-radius: 0;
+    width: 20%;
+}
+
+ul#lista-carrito{
+    padding: 5% 0;
+}
+
+#lista-carrito li{
+    list-style: none;
+    margin-bottom: 7%;
+    display: flex;
+}

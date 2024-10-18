@@ -1,12 +1,11 @@
 [
     {
         "id": 1,
-        "nombre": "Producto 1",
-        "image": "./images/2024_02_14-Roma-14.jpg",
-        "precio": 200,
-        "descripcion": "Este producto es el modelo 1",
-        "categoria": "Alpha",
-        "stock": 6
+        "nombre": "Ovni 96",
+        "image": "./images/ovni.jpeg",
+        "precio": 350000,
+        "descripcion": "Ovni usado, modelo 96. Actualmente tiene 6 viajes a la luna y 2 a Marte. Puede absorber 17 vacas por minuto",
+        "stock": 2
     },
     {
         "id": 2,
@@ -14,7 +13,6 @@
         "image": "./images/2024_02_14-Roma-14.jpg",
         "precio": 400,
         "descripcion": "Este producto es el modelo 2",
-        "categoria": "Alpha",
         "stock": 8
     },
     {
@@ -23,7 +21,6 @@
         "image": "./images/2024_02_14-Roma-14.jpg",
         "precio": 600,
         "descripcion": "Este producto es el modelo 3",
-        "categoria": "Beta",
         "stock": 20
     }
 ]

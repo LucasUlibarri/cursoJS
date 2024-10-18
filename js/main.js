@@ -1,4 +1,4 @@
-//Bienvenida
+
 function capturarNombreUsuario(){
     Swal.fire({
         title: 'Ingresa tu nombre',
@@ -14,12 +14,12 @@ function capturarNombreUsuario(){
     })
 }
 
-//Agregar nombre al carrito
+
 function actualizarNombreCarrito(){
     const nombreUsuario = sessionStorage.getItem('nombreUsuario');
     if(nombreUsuario){
-        const nombreUsuarioCarrito = document.getElementById('nombreUsuario-carrito');
-        nonombreUsuarioCarrito.textContent = 'Hola ' + nombreUsuario;
+        const nonombreUsuarioCarrito = document.getElementById('nombreUsuario-carrito');
+        nonombreUsuarioCarrito.textContent = 'Hola ' + nombreUsuario + ',';
     }
 }
 
@@ -33,7 +33,7 @@ let total = 0;
 let productosMap = {};
 async function cargarProductos() {
     try {
-        const response = await fetch('productos.json');
+        const response = await fetch('../database/productos.json');
         const productos = await response.json();
 
         productos.forEach(producto => {
@@ -46,47 +46,48 @@ async function cargarProductos() {
     }
 }
 
-//Agregar productos al carrito
-function eventoAgregarCarrito(idProducto) {
-    const btnAgregar = document.querySelectorAll('.agregar-carrito');
-    btnAgregar.forEach(boton => {
+
+export function eventoAgregarCarrito() {
+    const botonesAgregar = document.querySelectorAll('.agregar-carrito');
+    
+    botonesAgregar.forEach(boton => {
         boton.addEventListener('click', (e) => {
-            const idProducto = e.target.getAttribute('data-id');
-            agregarAlCarrito(parseInt(idProducto));
+            const idProducto = e.target.dataset.id;
+            const cantidadInput = document.getElementById(`cantidad-${idProducto}`);
+            const cantidad = parseInt(cantidadInput.value);
+            agregarAlCarrito(parseInt(idProducto), cantidad);
         });
     });
 }
 
-function agregarAlCarrito(idProducto){
-    const producto = productosMap[idProducto];
-    const cantidadInput = document.getElementById(`cantidad-${producto.id}`);
-    const cantidad = parseInt(cantidadInput.value);
 
+function agregarAlCarrito(idProducto, cantidad){
+    const producto = productosMap[idProducto];
     const productoEnCarrito = carrito.find(item => item.id === idProducto);
 
     if(productoEnCarrito){
-        if(productoEnCarrito.cantidad < producto.stock){
-            productoEnCarrito.cantidad++;
-        } else{
-        Swal.fire({
-            icon: 'warning',
-            title: 'Stock máximo alcanzado',
-            text: `No puedes agregar más de ${producto.stock} unidades`
-        });
-        return;
-    };
-    } else{
+        if(productoEnCarrito.cantidad + cantidad <= producto.stock){
+            productoEnCarrito.cantidad += cantidad;
+        } else {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Stock máximo alcanzado',
+                text: `No puedes agregar más de ${producto.stock} unidades`
+            });
+            return;
+        }
+    } else {
         carrito.push({
             id: producto.id,
             nombre: producto.nombre,
             precio: producto.precio,
             cantidad: cantidad
         });
-    };
-    
+    }
+
     actualizarCarrito();
     toastAgregado();
-};
+}
 
 
 
@@ -103,41 +104,44 @@ function toastAgregado() {
 }
 
 
-function actualizarCarrito(){
-
-    const listCarrito = document.getElementById('lista-carrito');
+function actualizarCarrito() {
+    const listaCarrito = document.getElementById('lista-carrito');
     const totalCarrito = document.getElementById('total-carrito');
     total = 0;
 
     listaCarrito.innerHTML = '';
 
-    if(carrito.length === 0){
+    if (carrito.length === 0) {
         let item = document.createElement('li');
-        item.innerHTML = "Tu carrito esta vacío";
+        item.innerHTML = "Tu carrito está vacío";
         item.classList.add('carrito-vacio');
-
         listaCarrito.appendChild(item);
-    }else{
+    } else {
         carrito.forEach(producto => {
             
-            const itemProducto = `
-                <h5>${producto.nombre}</h5>
-                <span>Cantidad: ${producto.cantidad}</span>
-                <span>Precio: $${producto.precio * producto.cantidad}</span>
-                <button class="btn btn-danger btn-sm eliminar-producto" data-id="${producto.id}">Quitar productos</button>
-                `;
-        
-        listaCarrito.innerHTML += itemProducto;
-        total += producto.precio * producto.cantidad;
+            const itemProducto = document.createElement('li');
+            itemProducto.innerHTML = `
+                <div class="item-descripción">
+                    <h5>${producto.nombre}</h5>
+                    <span>Cantidad: ${producto.cantidad}</span>
+                    <span>Precio: $${producto.precio * producto.cantidad}</span>
+                </div>
+                <button class="btn btn-danger btn-sm eliminar-producto" data-id="${producto.id}">
+                     <i class="fas fa-trash"></i>
+                </button>
+            `;
+            
+            listaCarrito.appendChild(itemProducto);
+            total += producto.precio * producto.cantidad;
         });
 
-        totalCarrito.textContent = `Total $${total}`;
-    };
+        totalCarrito.textContent = `Total: $${total}`;
+    }
 
     localStorage.setItem('carrito', JSON.stringify(carrito));
-
-    eventoEliminarCarrito()
+    eventoEliminarCarrito();
 }
+
 
 
 function eventoEliminarCarrito(){
@@ -172,7 +176,6 @@ function eliminarDelCarrito(idProducto){
 
 document.addEventListener('DOMContentLoaded', () => {
     capturarNombreUsuario();
-    
     const carritoStorage = JSON.parse(localStorage.getItem('carrito'));
     if (carritoStorage) {
         carrito = carritoStorage;
@@ -185,133 +188,77 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-// let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-
-// const cartContainer = document.getElementById('lista-carrito')
-
-
-// function showCart(){
-
-//     //const cartContainer = document.getElementById('lista-carrito')
-//     cartContainer.innerHTML = '';
-
-
-//     carrito.forEach((product, index) => {
-//         const {name, price, quantity} = product;
-//         const item = document.createElement('li');
+document.getElementById('confirmar-carrito').addEventListener('click', () => {
+    if (carrito.length === 0) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Carrito vacío',
+            text: 'No tenes productos en tu carrito.'
+        });
+    } else {
         
-//         item.innerHTML = `
-//         <h5 class='cart-product-title'>${name}</h5>
-//         <p class='cart-product-price'>Precio: ${price}</p>
-//         <span>Cantidad: ${quantity}</span>
-//         `;
+        Swal.fire({
+            title: 'Finaliza tu compra',
+            html: `
+                <input id="nombre" class="swal2-input" placeholder="Nombre" value="${sessionStorage.getItem('nombreUsuario')}">
+                <input id="email" class="swal2-input" placeholder="Mail">
+                <input id="tarjeta" class="swal2-input" placeholder="Últimos 4 dígitos de tu tarjeta" maxlength="4" type="text">
+            `,
+            focusConfirm: false,
+            preConfirm: () => {
+                const nombre = document.getElementById('nombre').value;
+                const email = document.getElementById('email').value;
+                const tarjeta = document.getElementById('tarjeta').value;
 
-//         cartContainer.appendChild(item)
-//     })
+                
+                if (!nombre || !email || !tarjeta) {
+                    Swal.showValidationMessage('Por favor, completa todos los campos');
+                    return false;
+                }
 
-//     calcTotal();
-// }
+                
+                const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailPattern.test(email)) {
+                    Swal.showValidationMessage('Por favor, ingresa un correo electrónico válido');
+                    return false;
+                }
 
+                
+                if (tarjeta.length !== 4 || isNaN(tarjeta)) {
+                    Swal.showValidationMessage('Los últimos 4 dígitos de la tarjeta deben ser exactamente 4 números');
+                    return false;
+                }
 
+                return { nombre, email, tarjeta };
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const { nombre } = result.value;
 
-
-// function agregarAlCarrito(event){
-//     const boton = event.target;
-//     const productCard = boton.closest('.card');
-//     const productName = productCard.querySelector('.card-title').textContent;
-//     const productPrice = productCard.querySelector('.producto-precio');
-
-//     const productQuantity = productCard.querySelector('.cantidad-input').value;
-
-
-//     const product = {
-//         nanme: productName,
-//         price: productPrice,
-//         quantity: productQuantity,
-//     }
-
-//     carrito.push(product);
-
-//     alLocalStorage();
-//     showCart();
-// }
-
-
-// document.addEventListener('DOMContentLoaded', function(){
-
-//     const botonesAgregar = document.querySelectorAll(".agregar-carrito");
-    
-//     botonesAgregar.forEach((boton) => {
-//         boton.addEventListener("click", agregarAlCarrito);
-//     });
-
-//     //const cartContainer = document.getElementById('lista-carrito');
-//     cartContainer.addEventListener('click', quitarProducto);
-//     cartContainer.addEventListener('click', (event) =>{
-        
-//         /* if (event.target.classList.contains('cantidad-input')) {
-//             const index = Number (event.target.dataset.index);
-//             carrito[index].productQuantity++;
-//             alLocalStorage();
-//             showCart();
-//         } */
-//     });
-
-
-//     function deleteCarrito(event){
-//         if (event.target.classList.contains('vaciar-carrito')){
-//             const index = Number(event.target.dataset.index);
-//             carrito.splice(index, 1);
-//             alLocalStorage();
-//             showCart();
-//         }
-//     }
-
-        
-// });
-
-
-// function alLocalStorage(){
-//     localStorage.setItem('carrito', JSON.stringify(carrito));
-// }
-
-
-
-
-
-
-/* let div = document.createElement('div');
-
-
-let firstForm = document.createElement('form')
-firstForm.id = "formContainer",
-firstForm.innerHTML = `<input type="text" id="inputNombre" name="Nombre">
-                        <input type="submit" id="firstBtn" value="Enviar">`;
-
-
-
-let producDisplay = document.getElementById('productos')
-producDisplay.appendChild(firstForm);
-
-
-let inputNombre = document.getElementById("inputNombre");
-let btn = document.getElementById('firstBtn');
-
-let nombreDisplay = div
-nombreDisplay.className = 'nombreDisplay';
-
-btn.addEventListener("click", () => {    
-    sessionStorage.setItem('nombre', inputNombre.value);
-    let nombreUsuario = sessionStorage.getItem('nombre')
-
-    if((nombreUsuario == '')||(nombreUsuario == null)){
-        let errorMsg = document.createElement('h1')
-        errorMsg.innerHTML = 'Por favor ingresar un valor'
-        document.body.appendChild(errorMsg)
-    }else{
-        document.getElementById('formContainer').remove();
-        nombreDisplay.innerHTML = `<h1>Bienvenido ${nombreUsuario}!</h1>`;
-        document.body.appendChild(nombreDisplay)
-        listaProductos()
+                
+                mostrarMensajeAgradecimiento(nombre);
+            }
+        });
     }
-}); */
+});
+
+
+function mostrarMensajeAgradecimiento(nombre) {
+    
+    document.getElementById('productsSection').classList.add('ocultar');
+    document.getElementById('carrito').classList.add('ocultar');
+    
+    
+    carrito = [];
+    actualizarCarrito();
+
+    
+    const mensaje = document.createElement('div');
+    mensaje.style.textAlign = 'center';
+    mensaje.style.marginTop = '20%';
+    mensaje.innerHTML = `
+        <h1>Gracias, ${nombre}, por tu compra!</h1>
+        <p>Tu pedido ha sido procesado con éxito.</p>
+    `;
+    document.querySelector('main').appendChild(mensaje);
+}
